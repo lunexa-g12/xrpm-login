@@ -1,0 +1,33 @@
+{
+  "name": "xrpm-login",
+  "private": true,
+  "description": "Sign In With XRPM — open-source partner authentication SDK",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xrpmemes/xrpm-login.git"
+  },
+  "homepage": "https://github.com/xrpmemes/xrpm-login#readme",
+  "bugs": {
+    "url": "https://github.com/xrpmemes/xrpm-login/issues"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "pnpm -r --filter './packages/**' build",
+    "build:all": "pnpm -r build",
+    "dev": "pnpm -r --parallel --filter './packages/**' dev",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "clean": "pnpm -r --parallel exec rm -rf dist node_modules"
+  },
+  "devDependencies": {
+    "ripple-keypairs": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=9.0.0"
+  }
+}

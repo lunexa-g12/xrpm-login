@@ -1,0 +1,33 @@
+{
+  "name": "@xrpm-login/ui-react",
+  "version": "1.0.0",
+  "description": "Sign In With XRPM — drop-in React components (LoginButton, QrModal, StatusPanel)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "README.md", "../../DISCLAIMER.md", "../../LICENSE"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xrpmemes/xrpm-login.git",
+    "directory": "packages/ui-react"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@xrpm-login/sdk-web": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "typescript": "^5.4.0"
+  },
+  "engines": { "node": ">=18.0.0" }
+}

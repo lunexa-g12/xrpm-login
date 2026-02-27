@@ -1,0 +1,41 @@
+{
+  "name": "@xrpm-login/nonce-store",
+  "version": "1.0.0",
+  "description": "Nonce store adapters for XRPM_LOGIN_V1 replay attack prevention (memory, Redis, Postgres)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./memory": "./dist/memory.js",
+    "./redis": "./dist/redis.js",
+    "./postgres": "./dist/postgres.js"
+  },
+  "files": ["dist", "README.md", "../../DISCLAIMER.md", "../../LICENSE"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xrpmemes/xrpm-login.git",
+    "directory": "packages/nonce-store"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "node --test dist/index.test.js"
+  },
+  "peerDependencies": {
+    "ioredis": ">=5.0.0",
+    "pg": ">=8.0.0"
+  },
+  "peerDependenciesMeta": {
+    "ioredis": { "optional": true },
+    "pg": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/pg": "^8.0.0",
+    "ioredis": "^5.0.0",
+    "pg": "^8.0.0",
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  },
+  "engines": { "node": ">=18.0.0" }
+}

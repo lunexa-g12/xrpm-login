@@ -1,0 +1,27 @@
+{
+  "name": "@xrpm-login/verifier",
+  "version": "1.0.0",
+  "description": "XRPM_LOGIN_V1 proof verifier — canonical message builder and signature verification",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "README.md", "../../DISCLAIMER.md", "../../LICENSE"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xrpmemes/xrpm-login.git",
+    "directory": "packages/verifier"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "node --test dist/index.test.js"
+  },
+  "dependencies": {
+    "ripple-keypairs": "^2.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  },
+  "engines": { "node": ">=18.0.0" }
+}

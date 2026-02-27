@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/xrpmemes/xrpm-login/spec/proof.schema.json",
+  "title": "XRPM Login Proof",
+  "description": "The signed proof object sent from the XRPM app to the partner callback URL",
+  "type": "object",
+  "required": ["v", "aud", "nonce", "iat", "exp", "client_id", "account", "pubkey", "alg", "sig"],
+  "additionalProperties": false,
+  "properties": {
+    "v": {
+      "type": "integer",
+      "const": 1
+    },
+    "aud": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://"
+    },
+    "nonce": {
+      "type": "string",
+      "minLength": 40
+    },
+    "iat": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "exp": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "client_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "account": {
+      "type": "string",
+      "pattern": "^r[1-9A-HJ-NP-Za-km-z]{24,34}$",
+      "description": "XRPL classic rAddress."
+    },
+    "pubkey": {
+      "type": "string",
+      "pattern": "^(ED|02|03)[0-9A-Fa-f]{64}$",
+      "description": "Hex-encoded public key. ED prefix for ed25519, 02/03 for secp256k1."
+    },
+    "alg": {
+      "type": "string",
+      "enum": ["ed25519", "secp256k1"],
+      "description": "Signing algorithm used."
+    },
+    "sig": {
+      "type": "string",
+      "description": "base64url-encoded raw signature bytes."
+    }
+  }
+}

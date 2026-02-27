@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In With XRPM — Static HTML Example</title>
+  <style>
+    body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background: #f8fafc; }
+    h1 { font-size: 1.5rem; margin-bottom: 8px; }
+    p { color: #666; margin-bottom: 32px; font-size: 14px; }
+    button { padding: 12px 24px; background: #0066cc; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    #status { margin-top: 16px; font-size: 14px; color: #555; }
+    #qr-section { display: none; text-align: center; margin-top: 24px; }
+    #qr-section img { border: 1px solid #e2e8f0; border-radius: 8px; }
+    footer { margin-top: 48px; font-size: 11px; color: #aaa; text-align: center; max-width: 360px; }
+    footer a { color: #0066cc; }
+  </style>
+</head>
+<body>
+
+<h1>Sign In With XRPM</h1>
+<p>Prove you hold ≥ 10 XRPM tokens to access this site.</p>
+
+<button id="signin-btn" onclick="startSignIn()">Sign In With XRPM</button>
+<div id="status"></div>
+
+<div id="qr-section">
+  <p style="margin: 16px 0 8px; font-size: 14px;">Scan with your XRPM app:</p>
+  <!-- Replace with your preferred QR library -->
+  <canvas id="qr-canvas"></canvas>
+  <p style="font-size: 12px; color: #aaa; margin-top: 8px;">Waiting for approval…</p>
+</div>
+
+<footer>
+  This site uses "Sign In With XRPM".
+  By signing in you agree to this site's terms. Authentication is provided via the XRP Ledger.
+  <a href="https://github.com/xrpmemes/xrpm-login/blob/main/DISCLAIMER.md" target="_blank">Disclaimer</a>
+</footer>
+
+<script>
+  // This example calls the optional hosted verifier service.
+  // Replace VERIFIER_URL with your own @xrpm-login/sdk-web server for production.
+  const VERIFIER_URL = 'https://api.xrpmemes.net'; // replace with your endpoint
+  const CALLBACK_URL = window.location.origin + '/auth/callback';
+
+  let pollInterval = null;
+  let challengeId = null;
+
+  async function startSignIn() {
+    const btn = document.getElementById('signin-btn');
+    const status = document.getElementById('status');
+    btn.disabled = true;
+    status.textContent = 'Generating challenge…';
+
+    try {
+      // 1. Create challenge via hosted verifier service
+      const res = await fetch(`${VERIFIER_URL}/v1/challenge`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          aud: window.location.origin,
+          redirect_uri: CALLBACK_URL,
+          client_id: window.location.hostname,
+          ttl: 300,
+        }),
+      });
+      const data = await res.json();
+      challengeId = data.challenge_id;
+
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      if (isMobile) {
+        // Mobile: open deep link directly
+        window.location.href = data.deep_link;
+        status.textContent = 'Opening XRPM app…';
+      } else {
+        // Desktop: show QR code
+        status.textContent = '';
+        document.getElementById('qr-section').style.display = 'block';
+        // TODO: render QR using your preferred library, e.g.:
+        // QRCode.toCanvas(document.getElementById('qr-canvas'), data.deep_link);
+        console.log('Deep link (encode as QR):', data.deep_link);
+        startPolling();
+      }
+    } catch (e) {
+      status.textContent = 'Error: ' + e.message;
+      btn.disabled = false;
+    }
+  }
+
+  function startPolling() {
+    // Poll your server for sign-in completion
+    // Your callback route should set a flag the poll endpoint reads
+    pollInterval = setInterval(async () => {
+      try {
+        const res = await fetch('/api/auth/poll');
+        const data = await res.json();
+        if (data.ready) {
+          clearInterval(pollInterval);
+          window.location.href = '/dashboard';
+        }
+      } catch { /* ignore transient errors */ }
+    }, 1500);
+  }
+</script>
+
+</body>
+</html>

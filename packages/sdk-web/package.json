@@ -1,0 +1,30 @@
+{
+  "name": "@xrpm-login/sdk-web",
+  "version": "1.0.0",
+  "description": "Sign In With XRPM — high-level SDK for partner websites (challenge generation, proof verification)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "README.md", "../../DISCLAIMER.md", "../../LICENSE"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xrpmemes/xrpm-login.git",
+    "directory": "packages/sdk-web"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "node --test dist/index.test.js"
+  },
+  "dependencies": {
+    "@xrpm-login/verifier": "workspace:*",
+    "@xrpm-login/eligibility": "workspace:*",
+    "@xrpm-login/nonce-store": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  },
+  "engines": { "node": ">=18.0.0" },
+  "keywords": ["xrpm", "xrpl", "signin", "authentication", "web3", "wallet"]
+}

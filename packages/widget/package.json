@@ -1,0 +1,25 @@
+{
+  "name": "@xrpm-login/widget",
+  "version": "1.0.0",
+  "description": "Sign In With XRPM — drop-in browser widget, zero backend required",
+  "main": "dist/widget.js",
+  "files": ["dist", "README.md", "../../DISCLAIMER.md", "../../LICENSE"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xrpmemes/xrpm-login.git",
+    "directory": "packages/widget"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build.js --watch"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.0"
+  },
+  "devDependencies": {
+    "@types/qrcode": "^1.5.0",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.4.0"
+  }
+}

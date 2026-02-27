@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/xrpmemes/xrpm-login/spec/challenge.schema.json",
+  "title": "XRPM Login Challenge",
+  "description": "The challenge JSON embedded in the xrpm://signin deep link",
+  "type": "object",
+  "required": ["v", "aud", "nonce", "iat", "exp", "client_id", "redirect_uri"],
+  "additionalProperties": false,
+  "properties": {
+    "v": {
+      "type": "integer",
+      "const": 1,
+      "description": "Protocol version. Must be 1."
+    },
+    "aud": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://",
+      "description": "HTTPS URL of the partner site."
+    },
+    "nonce": {
+      "type": "string",
+      "minLength": 40,
+      "description": "base64url of 32 random bytes. Single-use."
+    },
+    "iat": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Unix timestamp when challenge was issued."
+    },
+    "exp": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Unix timestamp when challenge expires."
+    },
+    "client_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "description": "Partner identifier, typically the domain."
+    },
+    "redirect_uri": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https://",
+      "description": "HTTPS callback URL where the proof will be delivered."
+    },
+    "state": {
+      "type": "string",
+      "maxLength": 512,
+      "description": "Optional opaque CSRF token echoed in the callback."
+    }
+  }
+}
